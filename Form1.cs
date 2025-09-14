@@ -1,13 +1,23 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Windows.Forms;
 
 namespace Biblioteca_Gestion2
 {
     public partial class FrmUsuarios : Form
     {
+        List<UsuarioBiblioteca> usuarios = new List<UsuarioBiblioteca>();
+        List<MaterialBiblioteca> materiales = new List<MaterialBiblioteca>();   
         public FrmUsuarios()
         {
             InitializeComponent();
+            InicializarColumnasUsuarios();
+            InicializarColumnasPrestamos();
+            CargarMaterialesIniciales(); //Simulación de inventario
+            ActualizarMateriales();//Actualiza ComboBox y dataGridView
+            ActualizarUsuarios(); //Si tienes usuarios precargados
+            ActualizarPrestamos(); //Muestra estado inicial
+
         }
 
         private void FrmUsuarios_Load(object sender, EventArgs e)
@@ -69,5 +79,7 @@ namespace Biblioteca_Gestion2
                 return $"{base.ObtenerDescripcion()} ISBN: {ISBN}, Páginas: {NumeroPaginas}.";
             }
         }
+
+       
     }
 }
