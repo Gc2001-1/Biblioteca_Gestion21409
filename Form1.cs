@@ -85,13 +85,18 @@ namespace Biblioteca_Gestion2
             InitializeComponent();
             InicializarColumnasUsuarios();
             InicializarColumnasPrestamos();
+            InicializarColumnasLibrosPrestados();
             CargarMaterialesIniciales();
             ActualizarMateriales();
             ActualizarUsuarios();
             ActualizarPrestamos();
+            ActualizarComboUsuariosPrestados();
 
             // Suscribir al evento CellClick para la edición
             DgvUsuarios.CellClick += DgvUsuarios_CellClick;
+
+            // Suscribir al evento SelectedIndexChanged del ComboBox
+            BtnUsuarioPrestado.SelectedIndexChanged += BtnUsuarioPrestado_SelectedIndexChanged;
         }
 
         // Clase Libro que hereda de MaterialBiblioteca
@@ -134,6 +139,17 @@ namespace Biblioteca_Gestion2
             DgvPrestamos.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
         }
 
+        // Método para inicializar columnas de libros prestados
+        private void InicializarColumnasLibrosPrestados()
+        {
+            DgvLibrosPrestados.Columns.Clear();
+            DgvLibrosPrestados.Columns.Add("Titulo", "Título");
+            DgvLibrosPrestados.Columns.Add("Autor", "Autor");
+            DgvLibrosPrestados.Columns.Add("Año", "Año Publicación");
+            DgvLibrosPrestados.Columns.Add("Estado", "Estado");
+            DgvLibrosPrestados.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+        }
+
         // Evento para prestar materiales
         private void BtnPrestar_Click(object sender, EventArgs e)
         {
@@ -145,6 +161,11 @@ namespace Biblioteca_Gestion2
                     material.AsignarPrestamo(usuario);
                     ActualizarMateriales();
                     ActualizarPrestamos();
+                    // Actualizar la lista de libros prestados si el usuario seleccionado es el mismo
+                    if (BtnUsuarioPrestado.SelectedItem == usuario)
+                    {
+                        MostrarLibrosPrestadosPorUsuario(usuario);
+                    }
                     MessageBox.Show("Préstamo realizado con éxito");
                 }
                 else
@@ -204,6 +225,7 @@ namespace Biblioteca_Gestion2
                 }
 
                 ActualizarUsuarios();
+                ActualizarComboUsuariosPrestados();
 
                 // Limpiar campos
                 TxtNombreUsuario.Text = "";
@@ -218,13 +240,26 @@ namespace Biblioteca_Gestion2
         // Evento para devolver materiales
         private void BtnDevolver_Click(object sender, EventArgs e)
         {
-            if (cmbMaterial.SelectedItem is MaterialBiblioteca material)
+            if (DgvPrestamos.SelectedRows.Count > 0)
             {
+                int selectedIndex = DgvPrestamos.SelectedRows[0].Index;
+                MaterialBiblioteca material = materiales[selectedIndex];
+
                 if (material.Prestado)
                 {
+                    // Guardar el usuario que tenía el préstamo para actualizar la vista después
+                    UsuarioBiblioteca usuarioConPrestamo = material.UsuarioPrestamo;
+
                     material.DevolverPrestamo();
                     ActualizarMateriales();
                     ActualizarPrestamos();
+
+                    // Actualizar la lista de libros prestados si el usuario afectado está seleccionado
+                    if (BtnUsuarioPrestado.SelectedItem == usuarioConPrestamo)
+                    {
+                        MostrarLibrosPrestadosPorUsuario(usuarioConPrestamo);
+                    }
+
                     MessageBox.Show("Devolución realizada con éxito");
                 }
                 else
@@ -234,7 +269,7 @@ namespace Biblioteca_Gestion2
             }
             else
             {
-                MessageBox.Show("Seleccione un material");
+                MessageBox.Show("Seleccione un material de la lista de préstamos");
             }
         }
 
@@ -273,6 +308,16 @@ namespace Biblioteca_Gestion2
             }
         }
 
+        // Método para actualizar el ComboBox de usuarios prestados
+        private void ActualizarComboUsuariosPrestados()
+        {
+            BtnUsuarioPrestado.Items.Clear();
+            foreach (var usuario in usuarios)
+            {
+                BtnUsuarioPrestado.Items.Add(usuario);
+            }
+        }
+
         // Evento para seleccionar un usuario para editar
         private void DgvUsuarios_CellClick(object sender, DataGridViewCellEventArgs e)
         {
@@ -290,14 +335,92 @@ namespace Biblioteca_Gestion2
             }
         }
 
-        // Eventos sin implementación (pueden eliminarse si no se usan)
+        // Evento para eliminar usuarios
+        private void BtnEliminar_Click(object sender, EventArgs e)
+        {
+            if (DgvUsuarios.SelectedRows.Count > 0)
+            {
+                int rowIndex = DgvUsuarios.CurrentRow.Index;
+                UsuarioBiblioteca usuarioAEliminar = usuarios[rowIndex];
+
+                // Verificar si el usuario tiene materiales prestados
+                bool tienePrestamos = false;
+                foreach (var material in materiales)
+                {
+                    if (material.Prestado && material.UsuarioPrestamo == usuarioAEliminar)
+                    {
+                        tienePrestamos = true;
+                        break;
+                    }
+                }
+
+                if (tienePrestamos)
+                {
+                    MessageBox.Show("No se puede eliminar el usuario porque tiene materiales prestados.");
+                    return;
+                }
+
+                DialogResult resultado = MessageBox.Show(
+                    $"¿Está seguro de que desea eliminar al usuario: {usuarioAEliminar.Nombre}?",
+                    "Confirmar eliminación",
+                    MessageBoxButtons.YesNo,
+                    MessageBoxIcon.Warning);
+
+                if (resultado == DialogResult.Yes)
+                {
+                    usuarios.RemoveAt(rowIndex);
+                    ActualizarUsuarios();
+                    ActualizarComboUsuariosPrestados();
+
+                    if (usuarioEditando == usuarioAEliminar)
+                    {
+                        usuarioEditando = null;
+                        TxtNombreUsuario.Text = "";
+                        TxtCarnetUsuario.Text = "";
+                        BtnAgregarUsuario.Text = "Agregar";
+                    }
+
+                    MessageBox.Show("Usuario eliminado correctamente.");
+                }
+            }
+            else
+            {
+                MessageBox.Show("Por favor, seleccione un usuario para eliminar.");
+            }
+        }
+
+        // Evento cuando se selecciona un usuario en el ComboBox de libros prestados
+        private void BtnUsuarioPrestado_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (BtnUsuarioPrestado.SelectedItem is UsuarioBiblioteca usuarioSeleccionado)
+            {
+                MostrarLibrosPrestadosPorUsuario(usuarioSeleccionado);
+            }
+        }
+
+        // Método para mostrar los libros prestados por un usuario específico
+        private void MostrarLibrosPrestadosPorUsuario(UsuarioBiblioteca usuario)
+        {
+            DgvLibrosPrestados.Rows.Clear();
+
+            foreach (var material in materiales)
+            {
+                if (material.Prestado && material.UsuarioPrestamo == usuario)
+                {
+                    DgvLibrosPrestados.Rows.Add(
+                        material.Titulo,
+                        material.Autor,
+                        material.AnioPublicacion,
+                        "Prestado"
+                    );
+                }
+            }
+        }
+
+        // Eventos sin implementación
         private void FrmUsuarios_Load(object sender, EventArgs e) { }
         private void DgvUsuarios_CellContentClick(object sender, DataGridViewCellEventArgs e) { }
         private void BtnEditar_Click(object sender, EventArgs e) { }
-
-        private void BtnEliminar_Click(object sender, EventArgs e)
-        {
-
-        }
+        private void button1_Click(object sender, EventArgs e) { }
     }
 }
