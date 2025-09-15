@@ -30,26 +30,28 @@
         {
             this.tabBiblioteca = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
-            this.tabPage2 = new System.Windows.Forms.TabPage();
-            this.LblUsuario = new System.Windows.Forms.Label();
-            this.LblNombreUsuario = new System.Windows.Forms.Label();
-            this.label3 = new System.Windows.Forms.Label();
-            this.TxtNombreUsuario = new System.Windows.Forms.TextBox();
-            this.TxtCarnetUsuario = new System.Windows.Forms.TextBox();
-            this.BtnAgregarUsuario = new System.Windows.Forms.Button();
             this.DgvUsuarios = new System.Windows.Forms.DataGridView();
-            this.LblPrestamo = new System.Windows.Forms.Label();
-            this.LblMaterial = new System.Windows.Forms.Label();
-            this.LblUsuario1 = new System.Windows.Forms.Label();
-            this.BtnPrestar = new System.Windows.Forms.Button();
-            this.BtnDevolver = new System.Windows.Forms.Button();
-            this.DgvPrestamos = new System.Windows.Forms.DataGridView();
-            this.cmbMaterial = new System.Windows.Forms.ComboBox();
+            this.BtnAgregarUsuario = new System.Windows.Forms.Button();
+            this.TxtCarnetUsuario = new System.Windows.Forms.TextBox();
+            this.TxtNombreUsuario = new System.Windows.Forms.TextBox();
+            this.label3 = new System.Windows.Forms.Label();
+            this.LblNombreUsuario = new System.Windows.Forms.Label();
+            this.LblUsuario = new System.Windows.Forms.Label();
+            this.tabPage2 = new System.Windows.Forms.TabPage();
             this.CmbUsuario = new System.Windows.Forms.ComboBox();
+            this.cmbMaterial = new System.Windows.Forms.ComboBox();
+            this.DgvPrestamos = new System.Windows.Forms.DataGridView();
+            this.BtnDevolver = new System.Windows.Forms.Button();
+            this.BtnPrestar = new System.Windows.Forms.Button();
+            this.LblUsuario1 = new System.Windows.Forms.Label();
+            this.LblMaterial = new System.Windows.Forms.Label();
+            this.LblPrestamo = new System.Windows.Forms.Label();
+            this.Column1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.tabBiblioteca.SuspendLayout();
             this.tabPage1.SuspendLayout();
-            this.tabPage2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.DgvUsuarios)).BeginInit();
+            this.tabPage2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.DgvPrestamos)).BeginInit();
             this.SuspendLayout();
             // 
@@ -80,6 +82,72 @@
             this.tabPage1.Text = "Usuarios";
             this.tabPage1.UseVisualStyleBackColor = true;
             // 
+            // DgvUsuarios
+            // 
+            this.DgvUsuarios.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.DgvUsuarios.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.Column1,
+            this.Column2});
+            this.DgvUsuarios.Location = new System.Drawing.Point(390, 88);
+            this.DgvUsuarios.Name = "DgvUsuarios";
+            this.DgvUsuarios.RowHeadersWidth = 51;
+            this.DgvUsuarios.RowTemplate.Height = 24;
+            this.DgvUsuarios.Size = new System.Drawing.Size(522, 246);
+            this.DgvUsuarios.TabIndex = 6;
+            this.DgvUsuarios.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.DgvUsuarios_CellContentClick);
+            // 
+            // BtnAgregarUsuario
+            // 
+            this.BtnAgregarUsuario.Location = new System.Drawing.Point(22, 268);
+            this.BtnAgregarUsuario.Name = "BtnAgregarUsuario";
+            this.BtnAgregarUsuario.Size = new System.Drawing.Size(304, 66);
+            this.BtnAgregarUsuario.TabIndex = 5;
+            this.BtnAgregarUsuario.Text = "Agregar";
+            this.BtnAgregarUsuario.UseVisualStyleBackColor = true;
+            this.BtnAgregarUsuario.Click += new System.EventHandler(this.BtnAgregarUsuario_Click);
+            // 
+            // TxtCarnetUsuario
+            // 
+            this.TxtCarnetUsuario.Location = new System.Drawing.Point(22, 211);
+            this.TxtCarnetUsuario.Name = "TxtCarnetUsuario";
+            this.TxtCarnetUsuario.Size = new System.Drawing.Size(304, 22);
+            this.TxtCarnetUsuario.TabIndex = 4;
+            // 
+            // TxtNombreUsuario
+            // 
+            this.TxtNombreUsuario.Location = new System.Drawing.Point(22, 121);
+            this.TxtNombreUsuario.Name = "TxtNombreUsuario";
+            this.TxtNombreUsuario.Size = new System.Drawing.Size(304, 22);
+            this.TxtNombreUsuario.TabIndex = 3;
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(19, 170);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(46, 16);
+            this.label3.TabIndex = 2;
+            this.label3.Text = "Carnet";
+            // 
+            // LblNombreUsuario
+            // 
+            this.LblNombreUsuario.AutoSize = true;
+            this.LblNombreUsuario.Location = new System.Drawing.Point(19, 88);
+            this.LblNombreUsuario.Name = "LblNombreUsuario";
+            this.LblNombreUsuario.Size = new System.Drawing.Size(117, 16);
+            this.LblNombreUsuario.TabIndex = 1;
+            this.LblNombreUsuario.Text = "Nombre Completo";
+            // 
+            // LblUsuario
+            // 
+            this.LblUsuario.AutoSize = true;
+            this.LblUsuario.Font = new System.Drawing.Font("Microsoft Sans Serif", 16.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.LblUsuario.Location = new System.Drawing.Point(335, 24);
+            this.LblUsuario.Name = "LblUsuario";
+            this.LblUsuario.Size = new System.Drawing.Size(279, 32);
+            this.LblUsuario.TabIndex = 0;
+            this.LblUsuario.Text = "Registro de usuario";
+            // 
             // tabPage2
             // 
             this.tabPage2.Controls.Add(this.CmbUsuario);
@@ -98,113 +166,21 @@
             this.tabPage2.Text = "Prestamos";
             this.tabPage2.UseVisualStyleBackColor = true;
             // 
-            // LblUsuario
+            // CmbUsuario
             // 
-            this.LblUsuario.AutoSize = true;
-            this.LblUsuario.Font = new System.Drawing.Font("Microsoft Sans Serif", 16.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.LblUsuario.Location = new System.Drawing.Point(335, 24);
-            this.LblUsuario.Name = "LblUsuario";
-            this.LblUsuario.Size = new System.Drawing.Size(279, 32);
-            this.LblUsuario.TabIndex = 0;
-            this.LblUsuario.Text = "Registro de usuario";
+            this.CmbUsuario.FormattingEnabled = true;
+            this.CmbUsuario.Location = new System.Drawing.Point(51, 186);
+            this.CmbUsuario.Name = "CmbUsuario";
+            this.CmbUsuario.Size = new System.Drawing.Size(162, 24);
+            this.CmbUsuario.TabIndex = 7;
             // 
-            // LblNombreUsuario
+            // cmbMaterial
             // 
-            this.LblNombreUsuario.AutoSize = true;
-            this.LblNombreUsuario.Location = new System.Drawing.Point(19, 88);
-            this.LblNombreUsuario.Name = "LblNombreUsuario";
-            this.LblNombreUsuario.Size = new System.Drawing.Size(117, 16);
-            this.LblNombreUsuario.TabIndex = 1;
-            this.LblNombreUsuario.Text = "Nombre Completo";
-            // 
-            // label3
-            // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(19, 170);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(46, 16);
-            this.label3.TabIndex = 2;
-            this.label3.Text = "Carnet";
-            // 
-            // TxtNombreUsuario
-            // 
-            this.TxtNombreUsuario.Location = new System.Drawing.Point(22, 121);
-            this.TxtNombreUsuario.Name = "TxtNombreUsuario";
-            this.TxtNombreUsuario.Size = new System.Drawing.Size(304, 22);
-            this.TxtNombreUsuario.TabIndex = 3;
-            // 
-            // TxtCarnetUsuario
-            // 
-            this.TxtCarnetUsuario.Location = new System.Drawing.Point(22, 211);
-            this.TxtCarnetUsuario.Name = "TxtCarnetUsuario";
-            this.TxtCarnetUsuario.Size = new System.Drawing.Size(304, 22);
-            this.TxtCarnetUsuario.TabIndex = 4;
-            // 
-            // BtnAgregarUsuario
-            // 
-            this.BtnAgregarUsuario.Location = new System.Drawing.Point(22, 268);
-            this.BtnAgregarUsuario.Name = "BtnAgregarUsuario";
-            this.BtnAgregarUsuario.Size = new System.Drawing.Size(304, 66);
-            this.BtnAgregarUsuario.TabIndex = 5;
-            this.BtnAgregarUsuario.Text = "Agregar";
-            this.BtnAgregarUsuario.UseVisualStyleBackColor = true;
-            // 
-            // DgvUsuarios
-            // 
-            this.DgvUsuarios.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.DgvUsuarios.Location = new System.Drawing.Point(390, 88);
-            this.DgvUsuarios.Name = "DgvUsuarios";
-            this.DgvUsuarios.RowHeadersWidth = 51;
-            this.DgvUsuarios.RowTemplate.Height = 24;
-            this.DgvUsuarios.Size = new System.Drawing.Size(522, 246);
-            this.DgvUsuarios.TabIndex = 6;
-            // 
-            // LblPrestamo
-            // 
-            this.LblPrestamo.AutoSize = true;
-            this.LblPrestamo.Font = new System.Drawing.Font("Microsoft Sans Serif", 16.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.LblPrestamo.Location = new System.Drawing.Point(375, 17);
-            this.LblPrestamo.Name = "LblPrestamo";
-            this.LblPrestamo.Size = new System.Drawing.Size(315, 32);
-            this.LblPrestamo.TabIndex = 0;
-            this.LblPrestamo.Text = "Control de Prestamos ";
-            // 
-            // LblMaterial
-            // 
-            this.LblMaterial.AutoSize = true;
-            this.LblMaterial.Location = new System.Drawing.Point(48, 54);
-            this.LblMaterial.Name = "LblMaterial";
-            this.LblMaterial.Size = new System.Drawing.Size(132, 16);
-            this.LblMaterial.TabIndex = 1;
-            this.LblMaterial.Text = "Lista de Disponibles ";
-            // 
-            // LblUsuario1
-            // 
-            this.LblUsuario1.AutoSize = true;
-            this.LblUsuario1.Location = new System.Drawing.Point(48, 142);
-            this.LblUsuario1.Name = "LblUsuario1";
-            this.LblUsuario1.Size = new System.Drawing.Size(108, 16);
-            this.LblUsuario1.TabIndex = 2;
-            this.LblUsuario1.Text = "Lista de usuarios";
-            this.LblUsuario1.Click += new System.EventHandler(this.label4_Click);
-            // 
-            // BtnPrestar
-            // 
-            this.BtnPrestar.Location = new System.Drawing.Point(51, 242);
-            this.BtnPrestar.Name = "BtnPrestar";
-            this.BtnPrestar.Size = new System.Drawing.Size(162, 30);
-            this.BtnPrestar.TabIndex = 3;
-            this.BtnPrestar.Text = "Prestar";
-            this.BtnPrestar.UseVisualStyleBackColor = true;
-            // 
-            // BtnDevolver
-            // 
-            this.BtnDevolver.Location = new System.Drawing.Point(51, 300);
-            this.BtnDevolver.Name = "BtnDevolver";
-            this.BtnDevolver.Size = new System.Drawing.Size(162, 30);
-            this.BtnDevolver.TabIndex = 4;
-            this.BtnDevolver.Text = "Devolver";
-            this.BtnDevolver.UseVisualStyleBackColor = true;
+            this.cmbMaterial.FormattingEnabled = true;
+            this.cmbMaterial.Location = new System.Drawing.Point(51, 97);
+            this.cmbMaterial.Name = "cmbMaterial";
+            this.cmbMaterial.Size = new System.Drawing.Size(162, 24);
+            this.cmbMaterial.TabIndex = 6;
             // 
             // DgvPrestamos
             // 
@@ -216,22 +192,67 @@
             this.DgvPrestamos.Size = new System.Drawing.Size(619, 262);
             this.DgvPrestamos.TabIndex = 5;
             // 
-            // cmbMaterial
+            // BtnDevolver
             // 
-            this.cmbMaterial.FormattingEnabled = true;
-            this.cmbMaterial.Location = new System.Drawing.Point(51, 97);
-            this.cmbMaterial.Name = "cmbMaterial";
-            this.cmbMaterial.Size = new System.Drawing.Size(162, 24);
-            this.cmbMaterial.TabIndex = 6;
-            this.cmbMaterial.SelectedIndexChanged += new System.EventHandler(this.cmbMaterial_SelectedIndexChanged);
+            this.BtnDevolver.Location = new System.Drawing.Point(51, 300);
+            this.BtnDevolver.Name = "BtnDevolver";
+            this.BtnDevolver.Size = new System.Drawing.Size(162, 30);
+            this.BtnDevolver.TabIndex = 4;
+            this.BtnDevolver.Text = "Devolver";
+            this.BtnDevolver.UseVisualStyleBackColor = true;
+            this.BtnDevolver.Click += new System.EventHandler(this.BtnDevolver_Click);
             // 
-            // CmbUsuario
+            // BtnPrestar
             // 
-            this.CmbUsuario.FormattingEnabled = true;
-            this.CmbUsuario.Location = new System.Drawing.Point(51, 186);
-            this.CmbUsuario.Name = "CmbUsuario";
-            this.CmbUsuario.Size = new System.Drawing.Size(162, 24);
-            this.CmbUsuario.TabIndex = 7;
+            this.BtnPrestar.Location = new System.Drawing.Point(51, 242);
+            this.BtnPrestar.Name = "BtnPrestar";
+            this.BtnPrestar.Size = new System.Drawing.Size(162, 30);
+            this.BtnPrestar.TabIndex = 3;
+            this.BtnPrestar.Text = "Prestar";
+            this.BtnPrestar.UseVisualStyleBackColor = true;
+            this.BtnPrestar.Click += new System.EventHandler(this.BtnPrestar_Click);
+            // 
+            // LblUsuario1
+            // 
+            this.LblUsuario1.AutoSize = true;
+            this.LblUsuario1.Location = new System.Drawing.Point(48, 142);
+            this.LblUsuario1.Name = "LblUsuario1";
+            this.LblUsuario1.Size = new System.Drawing.Size(108, 16);
+            this.LblUsuario1.TabIndex = 2;
+            this.LblUsuario1.Text = "Lista de usuarios";
+            // 
+            // LblMaterial
+            // 
+            this.LblMaterial.AutoSize = true;
+            this.LblMaterial.Location = new System.Drawing.Point(48, 54);
+            this.LblMaterial.Name = "LblMaterial";
+            this.LblMaterial.Size = new System.Drawing.Size(132, 16);
+            this.LblMaterial.TabIndex = 1;
+            this.LblMaterial.Text = "Lista de Disponibles ";
+            // 
+            // LblPrestamo
+            // 
+            this.LblPrestamo.AutoSize = true;
+            this.LblPrestamo.Font = new System.Drawing.Font("Microsoft Sans Serif", 16.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.LblPrestamo.Location = new System.Drawing.Point(375, 17);
+            this.LblPrestamo.Name = "LblPrestamo";
+            this.LblPrestamo.Size = new System.Drawing.Size(315, 32);
+            this.LblPrestamo.TabIndex = 0;
+            this.LblPrestamo.Text = "Control de Prestamos ";
+            // 
+            // Column1
+            // 
+            this.Column1.HeaderText = "Nombre";
+            this.Column1.MinimumWidth = 6;
+            this.Column1.Name = "Column1";
+            this.Column1.Width = 300;
+            // 
+            // Column2
+            // 
+            this.Column2.HeaderText = "Carnet";
+            this.Column2.MinimumWidth = 6;
+            this.Column2.Name = "Column2";
+            this.Column2.Width = 200;
             // 
             // FrmUsuarios
             // 
@@ -245,9 +266,9 @@
             this.tabBiblioteca.ResumeLayout(false);
             this.tabPage1.ResumeLayout(false);
             this.tabPage1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.DgvUsuarios)).EndInit();
             this.tabPage2.ResumeLayout(false);
             this.tabPage2.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.DgvUsuarios)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.DgvPrestamos)).EndInit();
             this.ResumeLayout(false);
 
@@ -273,6 +294,8 @@
         private System.Windows.Forms.DataGridView DgvPrestamos;
         private System.Windows.Forms.Button BtnDevolver;
         private System.Windows.Forms.Button BtnPrestar;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Column1;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Column2;
     }
 }
 
