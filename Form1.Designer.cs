@@ -31,6 +31,8 @@
             this.tabBiblioteca = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
             this.DgvUsuarios = new System.Windows.Forms.DataGridView();
+            this.Column1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.BtnAgregarUsuario = new System.Windows.Forms.Button();
             this.TxtCarnetUsuario = new System.Windows.Forms.TextBox();
             this.TxtNombreUsuario = new System.Windows.Forms.TextBox();
@@ -46,8 +48,8 @@
             this.LblUsuario1 = new System.Windows.Forms.Label();
             this.LblMaterial = new System.Windows.Forms.Label();
             this.LblPrestamo = new System.Windows.Forms.Label();
-            this.Column1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Column2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.BtnEditar = new System.Windows.Forms.Button();
+            this.BtnEliminar = new System.Windows.Forms.Button();
             this.tabBiblioteca.SuspendLayout();
             this.tabPage1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.DgvUsuarios)).BeginInit();
@@ -67,6 +69,8 @@
             // 
             // tabPage1
             // 
+            this.tabPage1.Controls.Add(this.BtnEliminar);
+            this.tabPage1.Controls.Add(this.BtnEditar);
             this.tabPage1.Controls.Add(this.DgvUsuarios);
             this.tabPage1.Controls.Add(this.BtnAgregarUsuario);
             this.tabPage1.Controls.Add(this.TxtCarnetUsuario);
@@ -92,15 +96,29 @@
             this.DgvUsuarios.Name = "DgvUsuarios";
             this.DgvUsuarios.RowHeadersWidth = 51;
             this.DgvUsuarios.RowTemplate.Height = 24;
-            this.DgvUsuarios.Size = new System.Drawing.Size(522, 246);
+            this.DgvUsuarios.Size = new System.Drawing.Size(522, 169);
             this.DgvUsuarios.TabIndex = 6;
             this.DgvUsuarios.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.DgvUsuarios_CellContentClick);
+            // 
+            // Column1
+            // 
+            this.Column1.HeaderText = "Nombre";
+            this.Column1.MinimumWidth = 6;
+            this.Column1.Name = "Column1";
+            this.Column1.Width = 300;
+            // 
+            // Column2
+            // 
+            this.Column2.HeaderText = "Carnet";
+            this.Column2.MinimumWidth = 6;
+            this.Column2.Name = "Column2";
+            this.Column2.Width = 200;
             // 
             // BtnAgregarUsuario
             // 
             this.BtnAgregarUsuario.Location = new System.Drawing.Point(22, 268);
             this.BtnAgregarUsuario.Name = "BtnAgregarUsuario";
-            this.BtnAgregarUsuario.Size = new System.Drawing.Size(304, 66);
+            this.BtnAgregarUsuario.Size = new System.Drawing.Size(273, 66);
             this.BtnAgregarUsuario.TabIndex = 5;
             this.BtnAgregarUsuario.Text = "Agregar";
             this.BtnAgregarUsuario.UseVisualStyleBackColor = true;
@@ -240,19 +258,25 @@
             this.LblPrestamo.TabIndex = 0;
             this.LblPrestamo.Text = "Control de Prestamos ";
             // 
-            // Column1
+            // BtnEditar
             // 
-            this.Column1.HeaderText = "Nombre";
-            this.Column1.MinimumWidth = 6;
-            this.Column1.Name = "Column1";
-            this.Column1.Width = 300;
+            this.BtnEditar.Location = new System.Drawing.Point(310, 268);
+            this.BtnEditar.Name = "BtnEditar";
+            this.BtnEditar.Size = new System.Drawing.Size(271, 66);
+            this.BtnEditar.TabIndex = 7;
+            this.BtnEditar.Text = "Editar";
+            this.BtnEditar.UseVisualStyleBackColor = true;
+            this.BtnEditar.Click += new System.EventHandler(this.BtnEditar_Click);
             // 
-            // Column2
+            // BtnEliminar
             // 
-            this.Column2.HeaderText = "Carnet";
-            this.Column2.MinimumWidth = 6;
-            this.Column2.Name = "Column2";
-            this.Column2.Width = 200;
+            this.BtnEliminar.Location = new System.Drawing.Point(597, 268);
+            this.BtnEliminar.Name = "BtnEliminar";
+            this.BtnEliminar.Size = new System.Drawing.Size(304, 66);
+            this.BtnEliminar.TabIndex = 8;
+            this.BtnEliminar.Text = "Eliminar";
+            this.BtnEliminar.UseVisualStyleBackColor = true;
+            this.BtnEliminar.Click += new System.EventHandler(this.BtnEliminar_Click);
             // 
             // FrmUsuarios
             // 
@@ -296,6 +320,8 @@
         private System.Windows.Forms.Button BtnPrestar;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column1;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column2;
+        private System.Windows.Forms.Button BtnEliminar;
+        private System.Windows.Forms.Button BtnEditar;
     }
 }
 
