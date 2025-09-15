@@ -6,9 +6,14 @@ namespace Biblioteca_Gestion2
 {
     public partial class FrmUsuarios : Form
     {
+        // Listas para almacenar usuarios y materiales
         List<UsuarioBiblioteca> usuarios = new List<UsuarioBiblioteca>();
         List<MaterialBiblioteca> materiales = new List<MaterialBiblioteca>();
 
+        // Variable para llevar el control del usuario que se está editando
+        private UsuarioBiblioteca usuarioEditando = null;
+
+        // Clase UsuarioBiblioteca
         public class UsuarioBiblioteca
         {
             public string Nombre { get; set; }
@@ -27,20 +32,15 @@ namespace Biblioteca_Gestion2
             }
         }
 
-       
-        private void FrmUsuarios_Load(object sender, EventArgs e)
-        {
-
-        }
-
-        public abstract class MaterialBiblioteca 
+        // Clase abstracta MaterialBiblioteca
+        public abstract class MaterialBiblioteca
         {
             public string Titulo { get; set; }
             public string Autor { get; set; }
             public int AnioPublicacion { get; set; }
             public bool Prestado { get; private set; }
-           
             public UsuarioBiblioteca UsuarioPrestamo { get; private set; }
+
             public MaterialBiblioteca(string titulo, string autor, int anioPublicacion)
             {
                 Titulo = titulo;
@@ -49,13 +49,13 @@ namespace Biblioteca_Gestion2
                 Prestado = false;
                 UsuarioPrestamo = null;
             }
-            
 
             public void AsignarPrestamo(UsuarioBiblioteca usuario)
             {
                 Prestado = true;
                 UsuarioPrestamo = usuario;
             }
+
             public void DevolverPrestamo()
             {
                 Prestado = false;
@@ -78,33 +78,42 @@ namespace Biblioteca_Gestion2
                 return $"{Titulo} - {Autor} ({AnioPublicacion})";
             }
         }
+
+        // Constructor
         public FrmUsuarios()
         {
             InitializeComponent();
             InicializarColumnasUsuarios();
             InicializarColumnasPrestamos();
-            CargarMaterialesIniciales(); //Simulación de inventario
-            ActualizarMateriales();//Actualiza ComboBox y dataGridView*/
-            ActualizarUsuarios(); //Si tienes usuarios precargados
-            ActualizarPrestamos(); //Muestra estado inicial
+            CargarMaterialesIniciales();
+            ActualizarMateriales();
+            ActualizarUsuarios();
+            ActualizarPrestamos();
 
+            // Suscribir al evento CellClick para la edición
+            DgvUsuarios.CellClick += DgvUsuarios_CellClick;
         }
+
+        // Clase Libro que hereda de MaterialBiblioteca
         public class Libro : MaterialBiblioteca
         {
             public string ISBN { get; set; }
             public int NumeroPaginas { get; set; }
+
             public Libro(string titulo, string autor, int anioPublicacion, string isbn, int numeroPaginas)
                 : base(titulo, autor, anioPublicacion)
             {
                 ISBN = isbn;
                 NumeroPaginas = numeroPaginas;
             }
+
             public override string ObtenerDescripcion()
             {
                 return $"{base.ObtenerDescripcion()} ISBN: {ISBN}, Páginas: {NumeroPaginas}.";
             }
         }
 
+        // Método para inicializar columnas de usuarios
         private void InicializarColumnasUsuarios()
         {
             DgvUsuarios.Columns.Clear();
@@ -113,19 +122,21 @@ namespace Biblioteca_Gestion2
             DgvUsuarios.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
         }
 
+        // Método para inicializar columnas de préstamos
         private void InicializarColumnasPrestamos()
         {
             DgvPrestamos.Columns.Clear();
-            DgvPrestamos.Columns.Add("Titulo", "Titulo");
+            DgvPrestamos.Columns.Add("Titulo", "Título");
             DgvPrestamos.Columns.Add("Autor", "Autor");
-            DgvPrestamos.Columns.Add("Año", "Año");
+            DgvPrestamos.Columns.Add("Año", "Año Publicación");
             DgvPrestamos.Columns.Add("Estado", "Estado");
-         //   DgvPrestamos.Columns..Add("Usuario", "Usuario con Prestamo");
+            DgvPrestamos.Columns.Add("Usuario", "Usuario con Préstamo");
             DgvPrestamos.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
         }
+
+        // Evento para prestar materiales
         private void BtnPrestar_Click(object sender, EventArgs e)
         {
-
             if (cmbMaterial.SelectedItem is MaterialBiblioteca material &&
                 CmbUsuario.SelectedItem is UsuarioBiblioteca usuario)
             {
@@ -147,9 +158,9 @@ namespace Biblioteca_Gestion2
             }
         }
 
+        // Método para actualizar la lista de préstamos
         private void ActualizarPrestamos()
         {
-            // Actualizar el DataGridView de préstamos
             DgvPrestamos.Rows.Clear();
 
             foreach (var material in materiales)
@@ -164,14 +175,34 @@ namespace Biblioteca_Gestion2
             }
         }
 
+        // Evento para agregar o actualizar usuarios
         private void BtnAgregarUsuario_Click(object sender, EventArgs e)
         {
-
             if (!string.IsNullOrEmpty(TxtNombreUsuario.Text) &&
                 !string.IsNullOrEmpty(TxtCarnetUsuario.Text))
             {
-                var usuario = new UsuarioBiblioteca(TxtNombreUsuario.Text, TxtCarnetUsuario.Text);
-                usuarios.Add(usuario);
+                if (BtnAgregarUsuario.Text == "Agregar")
+                {
+                    // Modo agregar nuevo usuario
+                    var usuario = new UsuarioBiblioteca(TxtNombreUsuario.Text, TxtCarnetUsuario.Text);
+                    usuarios.Add(usuario);
+                    MessageBox.Show("Usuario agregado correctamente");
+                }
+                else
+                {
+                    // Modo actualizar usuario existente
+                    if (usuarioEditando != null)
+                    {
+                        usuarioEditando.Nombre = TxtNombreUsuario.Text;
+                        usuarioEditando.Carnet = TxtCarnetUsuario.Text;
+                        MessageBox.Show("Usuario actualizado correctamente");
+
+                        // Restablecer el modo a "Agregar"
+                        BtnAgregarUsuario.Text = "Agregar";
+                        usuarioEditando = null;
+                    }
+                }
+
                 ActualizarUsuarios();
 
                 // Limpiar campos
@@ -184,6 +215,7 @@ namespace Biblioteca_Gestion2
             }
         }
 
+        // Evento para devolver materiales
         private void BtnDevolver_Click(object sender, EventArgs e)
         {
             if (cmbMaterial.SelectedItem is MaterialBiblioteca material)
@@ -206,42 +238,64 @@ namespace Biblioteca_Gestion2
             }
         }
 
+        // Método para cargar materiales iniciales
         private void CargarMaterialesIniciales()
         {
             materiales.Add(new Libro("Cien Años de Soledad", "Gabriel García Márquez", 1967, "978-3-16-148410-0", 417));
             materiales.Add(new Libro("Don Quijote de la Mancha", "Miguel de Cervantes", 1605, "978-1-56619-909-4", 863));
             materiales.Add(new Libro("1984", "George Orwell", 1949, "978-0-452-28423-4", 328));
             materiales.Add(new Libro("El Principito", "Antoine de Saint-Exupéry", 1943, "978-0-15-601219-5", 96));
-
         }
 
+        // Método para actualizar la lista de materiales disponibles
         private void ActualizarMateriales()
         {
-
             cmbMaterial.Items.Clear();
             foreach (var material in materiales)
             {
-                // Mostrar solo materiales disponibles
                 if (!material.Prestado)
                 {
                     cmbMaterial.Items.Add(material);
                 }
             }
-
         }
 
+        // Método para actualizar la lista de usuarios
         private void ActualizarUsuarios()
         {
-           DgvUsuarios.Rows.Clear();
+            DgvUsuarios.Rows.Clear();
             CmbUsuario.Items.Clear();
-            foreach(var usuario in usuarios)
+
+            foreach (var usuario in usuarios)
             {
                 DgvUsuarios.Rows.Add(usuario.Nombre, usuario.Carnet);
                 CmbUsuario.Items.Add(usuario);
             }
         }
 
-        private void DgvUsuarios_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        // Evento para seleccionar un usuario para editar
+        private void DgvUsuarios_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.RowIndex >= 0) // Asegurarse de que no se hizo clic en el encabezado
+            {
+                // Obtener el usuario seleccionado
+                usuarioEditando = usuarios[e.RowIndex];
+
+                // Llenar los TextBox con los datos del usuario
+                TxtNombreUsuario.Text = usuarioEditando.Nombre;
+                TxtCarnetUsuario.Text = usuarioEditando.Carnet;
+
+                // Cambiar el texto del botón a "Actualizar"
+                BtnAgregarUsuario.Text = "Actualizar";
+            }
+        }
+
+        // Eventos sin implementación (pueden eliminarse si no se usan)
+        private void FrmUsuarios_Load(object sender, EventArgs e) { }
+        private void DgvUsuarios_CellContentClick(object sender, DataGridViewCellEventArgs e) { }
+        private void BtnEditar_Click(object sender, EventArgs e) { }
+
+        private void BtnEliminar_Click(object sender, EventArgs e)
         {
 
         }
